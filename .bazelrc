@@ -1,0 +1,58 @@
+common --enable_bzlmod
+# set output parameters for tests, including JUnit XML output for CI
+test --test_output=all
+common --test_env ENV_FOR_DYNACONF=testing --watchfs
+common --test_env REPO_ROOT # Expose the root of the repository for tests
+
+##################
+## set the default --define values for the build, overwritten where needed
+common --define=PY_VERSION_TAG="0.0.0+bin_ci_test"
+
+# This protects us from inadvertent package upgrades caused by us pulling in modules that happen to
+# depend on newer version of a package we already use.
+common --check_direct_dependencies=error
+
+######################################
+## Block for local tooling configuration
+######################################
+
+# Required to get rules_multirun to work properly with some Python packages; see
+# https://gist.github.com/shinypb/cef7033ed9f76feb7cd3d2065bcbada3 for more details.
+# The alternative to setting this flag is to set `legacy_create_init = False` on any py_binary
+# target that doesn't work properly under multirun without it.
+common --incompatible_default_to_explicit_init_py
+
+######################################
+## Block for Cache configuration
+######################################
+# local cache config for faster iteration and minimizing re-download
+common --repository_cache=~/.repository_cache
+common --nobuild_runfile_links
+
+# requires pulling the cert from asm first - this should happen automatically via the bin/bazel script
+common --tls_client_certificate=.bazel/client.crt --tls_client_key=.bazel/client.key --tls_certificate=.bazel/client.ca
+common --experimental_remote_cache_lease_extension=true --experimental_remote_merkle_tree_cache_size=1000 --experimental_remote_merkle_tree_cache
+
+# Disable the lockfile mode for now. This is because the lockfile mode is not yet
+# production ready, see https://bazelbuild.slack.com/archives/C014RARENH0/p1714003467408389
+common --lockfile_mode=off
+
+######################################
+## Block for CI settings
+######################################
+common:ci --remote_upload_local_results=true
+common:ci --test_output=errors
+common:ci --jobs=100
+common:ci --remote_download_minimal
+
+######################################
+## Block for BZLMOD settings
+######################################
+common --enable_bzlmod
+
+######################################
+## Block for protobuf settings
+######################################
+
+# Enable the new proto toolchain resolution for faster builds
+common --incompatible_enable_proto_toolchain_resolution

@@ -1,0 +1,34 @@
+[workspace]
+resolver = "2"
+members = [
+    "protos/example",
+    "services/hello_world_grpc_rust/server",
+]
+
+[workspace.package]
+edition = "2021"
+rust-version = "1.78.0"
+
+[workspace.dependencies]
+# internal crates
+example_proto_bindings ={ path="protos/example" }
+
+# external crates
+prost = { version = "0.12.6" }
+prost-types = { version = "0.12.6", default-features = false }
+tonic = { version = "0.11.0", features = ["transport"] }
+tonic-build = "0.11.0"
+tokio = { version = "1.38", default-features = false, features = ["macros", "net", "rt-multi-thread", "signal"] }
+protoc-gen-prost = "0.4.0"
+protoc-gen-tonic = "0.4.0"
+
+[profile.release]
+opt-level = 3
+strip = true
+lto = true
+codegen-units = 1
+
+[profile.release.package."*"]
+opt-level = 3
+strip = 'debuginfo'
+codegen-units = 1

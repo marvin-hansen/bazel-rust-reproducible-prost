@@ -1,0 +1,19 @@
+[package]
+name = "server"
+version = "0.1.0"
+edition = "2021"
+
+
+[[bin]]
+name = "server"
+path = "src/main.rs"
+
+
+[dependencies]
+# Internal crates
+example_proto_bindings = { workspace=true }
+# External crates
+tonic = { workspace=true }
+tokio = { workspace=true }
+protoc-gen-tonic = { version = "0.4.0"} # force inclusion in Cargo.lock
+protoc-gen-prost = { version = "0.4.0"} # force inclusion in Cargo.lock

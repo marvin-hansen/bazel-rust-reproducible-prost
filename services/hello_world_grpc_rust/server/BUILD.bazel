@@ -1,0 +1,17 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary")
+
+service_name = package_name().split("/")[-1]
+
+rust_binary(
+    name = service_name,
+    srcs = glob([
+        "src/*.rs",
+    ]),
+    crate_root = "src/main.rs",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//protos/example:greeting_rust_proto_library",
+        "@crates//:tokio",
+        "@crates//:tonic",
+    ],
+)

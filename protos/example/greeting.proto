@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package cloud_protos.example;
+
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "zipline/cloud_protos/example";
+
+message GreetingRequest {
+    string name = 1;
+    google.protobuf.Timestamp request_time = 2;
+}
+
+message GreetingResponse {
+    string greeting = 1;
+    google.protobuf.Timestamp response_time = 2;
+}
+
+service GreetingService {
+    rpc Greet(GreetingRequest) returns (GreetingResponse);
+}
