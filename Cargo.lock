@@ -194,6 +194,8 @@ name = "example_proto_bindings"
 version = "0.1.0"
 dependencies = [
  "prost 0.12.6",
+ "protoc-gen-prost",
+ "protoc-gen-tonic",
  "tonic",
  "tonic-build 0.11.0",
 ]
