@@ -10,10 +10,11 @@ path = "src/lib.rs"
 
 
 [dependencies]
-prost = { version = "0.12.6" }
-tonic = { version = "0.11.0", features = ["transport"] }
-protoc-gen-tonic = { version = "0.4.1"} # force inclusion in Cargo.lock
-protoc-gen-prost = { version = "0.4.0"} # force inclusion in Cargo.lock
+prost = { workspace = true }
+tonic = { workspace = true }
+protoc-gen-tonic = { workspace = true }
+protoc-gen-prost = { workspace = true } # force inclusion in Cargo.lock
+prost-types = { workspace = true }
 
 [build-dependencies]
-tonic-build = "0.11.0"
+tonic-build =  { workspace = true }

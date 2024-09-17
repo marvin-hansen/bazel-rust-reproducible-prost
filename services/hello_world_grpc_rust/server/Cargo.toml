@@ -15,5 +15,5 @@ example_proto_bindings = { workspace=true }
 # External crates
 tonic = { workspace=true }
 tokio = { workspace=true }
-protoc-gen-tonic = { version = "0.4.1"} # force inclusion in Cargo.lock
-protoc-gen-prost = { version = "0.4.0"} # force inclusion in Cargo.lock
+protoc-gen-tonic =  { workspace = true } # force inclusion in Cargo.lock
+protoc-gen-prost =  { workspace = true } # force inclusion in Cargo.lock
